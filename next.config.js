@@ -6,6 +6,7 @@ const withTM = require("next-transpile-modules")([
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  styledComponents: true,
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
