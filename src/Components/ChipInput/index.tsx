@@ -1,14 +1,13 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { Autocomplete, TextField, Chip } from '@mui/material';
 
 interface Props {
   className?: string;
+  tags?: string[];
+  setTags(newTags: string[]): void;
 }
 
-export const ChipInput = memo((props: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [tags, setTags] = useState<string[]>([] as string[]);
-
+export const ChipInput = memo(({ tags, setTags, ...props }: Props) => {
   return (
     <Autocomplete
       multiple
@@ -16,6 +15,7 @@ export const ChipInput = memo((props: Props) => {
       options={[]}
       defaultValue={[]}
       freeSolo
+      value={tags}
       onChange={(_, value) => setTags(value)}
       renderTags={(
         value: string[],

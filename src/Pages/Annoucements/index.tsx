@@ -1,11 +1,12 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Api from 'Api/api';
+import { useQuery } from 'react-query';
+import { Announcement } from 'Api/Types/Announcement';
 import { BubblesPageWrapper } from 'Components/BubblesPageWrapper';
 import { StyledTitle } from 'Components/StyledTitle';
 import { ChipInput } from 'Components/ChipInput';
 import { JobCard } from 'Components/jobCard';
-import { useQuery } from 'react-query';
-import { Announcement } from 'Api/Types/Announcement';
 
 const JobWrapper = styled.div`
   width: 100%;
@@ -30,20 +31,29 @@ const StyledChipInput = styled(ChipInput)`
 `;
 
 export const Annoucements = () => {
+  const [tagsQuery, setTagsQuery] = useState([] as string[]);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isLoading, error, data } = useQuery<
     Announcement[],
     { message: string }
-  >('repoData', () => Api.getAnnoucements([]));
+  >(['repoData', tagsQuery], () => Api.getAnnoucements(tagsQuery));
 
-  if (error) return <span>{'An error has occurred: ' + error.message}</span>;
+  const getTitle = () => {
+    if (error)
+      return (
+        <StyledTitle>{'An error has occurred: ' + error.message}</StyledTitle>
+      );
 
-  if (isLoading) return <span>'Loading...'</span>;
+    if (isLoading) return <StyledTitle>Loading...</StyledTitle>;
+
+    return 'Znajdź swój projekt';
+  };
 
   return (
     <>
-      <StyledTitle>Znajdź swój projekt</StyledTitle>
-      <StyledChipInput />
+      <StyledTitle>{getTitle()}</StyledTitle>
+      <StyledChipInput setTags={setTagsQuery} />
       <BubblesPageWrapper>
         <JobWrapper>
           <>

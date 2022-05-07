@@ -30,9 +30,9 @@ export default class Api {
   public static async getAnnoucements(
     tags?: string[],
   ): Promise<Announcement[]> {
-    const response = await Api.createClient().get('/announcements', {
+    const response = await Api.createClient().get('/announcements/', {
       params: {
-        tags,
+        tags: tags?.join(','),
       },
     });
     return response?.data;
