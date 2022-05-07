@@ -1,3 +1,3 @@
 import React from 'react';
 
-export Page
+export const PageWrapper = <></>;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Description,
   Item,
@@ -7,14 +7,14 @@ import {
   Title,
   Wrapper,
   TextButton,
-} from "./styled";
+} from './styled';
 
 interface Props {
   projectName: string;
   description: string;
   type: string;
   technology: string;
-  revenue: string;
+  revenue: string | number;
   id: string;
 }
 

@@ -1,5 +1,5 @@
-import { ButtonBase } from "@mui/material";
-import styled from "styled-components";
+import { ButtonBase } from '@mui/material';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   background: linear-gradient(

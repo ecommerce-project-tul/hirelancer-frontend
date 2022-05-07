@@ -7,7 +7,6 @@ const prettierOptions = JSON.parse(
 
 module.exports = {
   extends: [
-    'next/core-web-vitals',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
     'prettier/react',
@@ -28,7 +27,7 @@ module.exports = {
         'prettier/prettier': ['warn', prettierOptions],
         'no-underscore-dangle': ['error', { allow: ['_t'] }],
         '@typescript-eslint/naming-convention': ['warn'],
-        '@typescript-eslint/no-unused-vars': ['error'],
+        '@typescript-eslint/no-unused-vars': ['warn'],
         '@typescript-eslint/no-non-null-assertion': ['off'],
         'import/prefer-default-export': ['off'],
         'react/jsx-props-no-spreading': ['off'],
@@ -39,6 +38,7 @@ module.exports = {
         'consistent-return': ['off'],
         '@typescript-eslint/explicit-module-boundary-types': ['off'],
         '@typescript-eslint/indent': ['off'],
+        'react/jsx-filename-extension': ['off'],
       },
     },
     {
