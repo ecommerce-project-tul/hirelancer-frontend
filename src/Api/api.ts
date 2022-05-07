@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import { config } from 'config/index';
 import Session from './session';
 import { Announcement } from './Types/Announcement';
+import { CreateAnnouncementRequest } from './Models/Requests/CreateAnnoucementRequest';
 
 export default class Api {
   public static createClient(): AxiosInstance {
@@ -34,6 +35,15 @@ export default class Api {
       params: {
         tags: tags?.join(','),
       },
+    });
+    return response?.data;
+  }
+
+  public static async createAnnoucement(
+    query: CreateAnnouncementRequest,
+  ): Promise<Announcement[]> {
+    const response = await Api.createClient().post('/announcement/', {
+      query,
     });
     return response?.data;
   }
