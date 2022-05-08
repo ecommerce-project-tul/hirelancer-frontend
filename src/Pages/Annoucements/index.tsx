@@ -7,6 +7,9 @@ import { BubblesPageWrapper } from 'Components/BubblesPageWrapper';
 import { StyledTitle } from 'Components/StyledTitle';
 import { ChipInput } from 'Components/ChipInput';
 import { JobCard } from 'Components/jobCard';
+import { CreateAnnoucementModal } from 'Components/CreateAnnoucementModal';
+import { RegisterModal } from 'Components/RegisterModal';
+import { LoginModal } from 'Components/LoginModal';
 
 const JobWrapper = styled.div`
   width: 100%;
@@ -22,12 +25,19 @@ const JobWrapper = styled.div`
 
 const StyledChipInput = styled(ChipInput)`
   max-width: 64rem;
-  margin: auto;
   padding: 0 2.4rem;
+  width: 46rem;
 
   .MuiAutocomplete-inputRoot {
     border-radius: 1.2rem;
   }
+`;
+
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `;
 
 export const Annoucements = () => {
@@ -37,30 +47,35 @@ export const Annoucements = () => {
   const { isLoading, error, data } = useQuery<
     Announcement[],
     { message: string }
-  >(['repoData', tagsQuery], () => Api.getAnnoucements(tagsQuery));
+  >(['repoData', tagsQuery], () => Api.getAnnouncements(tagsQuery));
 
   const getTitle = () => {
     if (error)
       return (
-        <StyledTitle>{'An error has occurred: ' + error.message}</StyledTitle>
+        <StyledTitle>{'WystąpiŁ bŁąd'}</StyledTitle>
       );
 
-    if (isLoading) return <StyledTitle>Loading...</StyledTitle>;
+    if (isLoading) return <StyledTitle>Ładowanie...</StyledTitle>;
 
     return 'Znajdź swój projekt';
   };
 
   return (
     <>
+      <LoginModal />
+      <RegisterModal />
       <StyledTitle>{getTitle()}</StyledTitle>
-      <StyledChipInput setTags={setTagsQuery} />
+      <Wrapper>
+        <StyledChipInput setTags={setTagsQuery} />
+        <CreateAnnoucementModal/> 
+      </Wrapper>
       <BubblesPageWrapper>
         <JobWrapper>
           <>
-            {data?.map(({ id, description, tags, startingPrice }) => (
+            {data?.map(({ id, title, description, tags, startingPrice }) => (
               <JobCard
                 key={id}
-                projectName={id}
+                projectName={title}
                 description={description}
                 type={tags.map(tag => tag.name).join(', ')}
                 technology="Dowolna"

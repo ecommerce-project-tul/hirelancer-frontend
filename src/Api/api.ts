@@ -2,7 +2,13 @@ import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import { config } from 'config/index';
 import Session from './session';
 import { Announcement } from './Types/Announcement';
+import { User } from './Types/User';
 import { CreateAnnouncementRequest } from './Models/Requests/CreateAnnoucementRequest';
+import { CreateAnnouncementResponse } from './Models/Responses/CreateAnnouncementResponse';
+import { LoginResponse } from './Models/Responses/LoginResponse';
+import { LoginRequest } from './Models/Requests/LoginRequest';
+import { RegistrationResponse } from './Models/Responses/RegistrationResponse';
+import { RegistrationRequest } from './Models/Requests/RegistrationRequest';
 
 export default class Api {
   public static createClient(): AxiosInstance {
@@ -28,7 +34,7 @@ export default class Api {
     return headers as AxiosRequestHeaders;
   }
 
-  public static async getAnnoucements(
+  public static async getAnnouncements(
     tags?: string[],
   ): Promise<Announcement[]> {
     const response = await Api.createClient().get('/announcements/', {
@@ -39,12 +45,35 @@ export default class Api {
     return response?.data;
   }
 
-  public static async createAnnoucement(
+  public static async createAnnouncement(
     query: CreateAnnouncementRequest,
-  ): Promise<Announcement[]> {
-    const response = await Api.createClient().post('/announcement/', {
+  ): Promise<CreateAnnouncementResponse> {
+    const response = await Api.createClient().post('/announcement/',
       query,
-    });
+    );
+    return response?.data;
+  }
+
+  public static async getAnnoucementById(
+    annoucementId: string,
+  ): Promise<Announcement> {
+    const response = await Api.createClient().get(`/announcement/${annoucementId}`);
+    return response?.data;
+  }
+
+  public static async login(
+    body: LoginRequest,
+  ): Promise<LoginResponse> {
+    const response = await Api.createClient().post('/auth/login', body);
+
+    //TODO SAVE TOKEN
+    return response?.data;
+  }
+
+  public static async register(
+    body: RegistrationRequest,
+  ): Promise<RegistrationResponse> {
+    const response = await Api.createClient().post('/auth/register', body);
     return response?.data;
   }
 }

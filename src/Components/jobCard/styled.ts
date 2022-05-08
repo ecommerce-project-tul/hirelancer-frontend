@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 28rem;
+  height: fit-content;
 
   a {
     margin-top: 3.2rem;
@@ -59,6 +60,8 @@ export const Item = styled.li`
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 1.6rem;
+  column-gap: 1rem;
+  overflow-x: auto;
 `;
 export const TextButton = styled(ButtonBase)`
   font-style: normal;

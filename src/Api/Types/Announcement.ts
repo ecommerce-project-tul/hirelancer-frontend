@@ -7,6 +7,7 @@ export interface Announcement {
   id: string;
   client: User;
   chosenOffer: Offer;
+  title: string;
   description: string;
   startingPrice: number;
   deadlineDate: Date;

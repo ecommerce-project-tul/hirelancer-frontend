@@ -5,6 +5,8 @@ export const Wrapper = styled.div`
   width: 100%;
   min-height: 10rem;
   margin-top: 2.4rem;
+
+  height: 100%;
 `;
 
 export const Bubbles = styled(BubblesUnstyled)`
@@ -19,4 +21,6 @@ export const ContentWrapper = styled.div`
   padding-top: 4rem;
   position: relative;
   z-index: 2;
+
+  height: 100%;
 `;
