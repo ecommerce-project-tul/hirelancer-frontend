@@ -48,25 +48,26 @@ export default class Api {
   public static async createAnnouncement(
     query: CreateAnnouncementRequest,
   ): Promise<CreateAnnouncementResponse> {
-    const response = await Api.createClient().post('/announcement/',
-      query,
-    );
+    const response = await Api.createClient().post('/announcement/', query);
     return response?.data;
   }
 
   public static async getAnnoucementById(
     annoucementId: string,
   ): Promise<Announcement> {
-    const response = await Api.createClient().get(`/announcement/${annoucementId}`);
+    const response = await Api.createClient().get(
+      `/announcement/${annoucementId}`,
+    );
     return response?.data;
   }
 
-  public static async login(
-    body: LoginRequest,
-  ): Promise<LoginResponse> {
+  public static async login(body: LoginRequest): Promise<LoginResponse> {
     const response = await Api.createClient().post('/auth/login', body);
 
-    //TODO SAVE TOKEN
+    if (response.data.token) {
+      Session.saveSession(response.data.token);
+    }
+
     return response?.data;
   }
 
