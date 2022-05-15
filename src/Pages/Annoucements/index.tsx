@@ -33,7 +33,6 @@ const StyledChipInput = styled(ChipInput)`
   }
 `;
 
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -50,10 +49,7 @@ export const Annoucements = () => {
   >(['repoData', tagsQuery], () => Api.getAnnouncements(tagsQuery));
 
   const getTitle = () => {
-    if (error)
-      return (
-        <StyledTitle>{'WystąpiŁ bŁąd'}</StyledTitle>
-      );
+    if (error) return <StyledTitle>{'Wystąpił błąd'}</StyledTitle>;
 
     if (isLoading) return <StyledTitle>Ładowanie...</StyledTitle>;
 
@@ -67,7 +63,7 @@ export const Annoucements = () => {
       <StyledTitle>{getTitle()}</StyledTitle>
       <Wrapper>
         <StyledChipInput setTags={setTagsQuery} />
-        <CreateAnnoucementModal/> 
+        <CreateAnnoucementModal />
       </Wrapper>
       <BubblesPageWrapper>
         <JobWrapper>

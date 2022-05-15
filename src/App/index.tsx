@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Annoucements } from 'Pages/Annoucements';
 import { AnnoucementDetails } from 'Pages/AnnoucementDetails/';
 import { NoMatch } from 'Pages/NoMatch';
+import { UserPage } from 'Pages/User';
 import { ToastContainer } from 'material-react-toastify';
-
 
 const queryClient = new QueryClient();
 
@@ -21,10 +21,14 @@ const App = () => {
             <Route path=":annoucementId" element={<AnnoucementDetails />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
+          <Route path="users">
+            <Route path=":email" element={<UserPage />} />
+            <Route path="*" element={<NoMatch />} />
+          </Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer position='top-center' />
+      <ToastContainer position="top-center" />
     </QueryClientProvider>
   );
 };

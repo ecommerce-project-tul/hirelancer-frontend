@@ -77,4 +77,9 @@ export default class Api {
     const response = await Api.createClient().post('/auth/register', body);
     return response?.data;
   }
+
+  public static async getUser(email: string): Promise<User> {
+    const response = await Api.createClient().get(`/users/${email}`);
+    return response?.data;
+  }
 }

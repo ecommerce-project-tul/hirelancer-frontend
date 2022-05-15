@@ -13,63 +13,55 @@ import { Message } from 'Api/Types/Message';
 import { QuestionsAndAnserwers } from './QuestionsAndAnserwers';
 
 export const LeftSideHeader = styled(StyledTitle)`
-    text-align: left;
-    margin-left: 2.4rem;
+  text-align: left;
+  margin-left: 2.4rem;
 `;
 
 export const AnnoucementDescription = styled.p`
-    text-align: left;
-    font-family: Poiret One;
-    font-size: 1.8rem;
-    line-height: 3rem;
+  text-align: left;
+  font-family: Poiret One;
+  font-size: 1.8rem;
+  line-height: 3rem;
 `;
 
 export const QuestionsAndAnserwersWrapper = styled.div`
-    text-align: left;
-    background-color: #fff;
-    border-radius: 1rem;
-    padding: 1rem;
-    margin-top: 1rem;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
 `;
 
 export const AnnoucementDetails = () => {
-    const { annoucementId } = useParams<{ annoucementId: string }>();
+  const { annoucementId } = useParams<{ annoucementId: string }>();
 
-    const { isLoading, error, data } = useQuery<
-        Announcement,
-        { message: string }
-    >(['repoData', annoucementId], () => Api.getAnnoucementById(annoucementId!));
+  const { isLoading, error, data } = useQuery<
+    Announcement,
+    { message: string }
+  >(['repoData', annoucementId], () => Api.getAnnoucementById(annoucementId!));
 
-    const getTitle = () => {
-        if (error)
-            return (
-                <StyledTitle>{'An error has occurred: ' + error.message}</StyledTitle>
-            );
+  if (error)
+    return <StyledTitle>{'Wystąpił błąd: ' + error.message}</StyledTitle>;
 
-        if (isLoading) return <StyledTitle>Loading...</StyledTitle>;
+  if (isLoading) return <StyledTitle>Ładowanie...</StyledTitle>;
 
-        return 'Znajdź swój projekt';
-    };
+  return (
+    <>
+      <LeftSideHeader>{data?.title}</LeftSideHeader>
+      <BubblesPageWrapper>
+        <AnnoucementDescription>{data?.description}</AnnoucementDescription>
 
-    return <>
-        <LeftSideHeader>{data?.title}</LeftSideHeader>
-        <BubblesPageWrapper>
-            <AnnoucementDescription>
-                {data?.description}
-            </AnnoucementDescription> 
-            
-            <Button color="primary">Podaj wycenę</Button>
-            <QuestionsAndAnserwersWrapper>
-                {
-                    data?.messages?.map(message => 
-                         <QuestionsAndAnserwers 
-                         fromWhom={String(message.isAnonymous)}
-                         question={message.content}
-                         answer={message.message?.content}
-                         />,
-                    )
-                }
-            </QuestionsAndAnserwersWrapper>
-        </BubblesPageWrapper>
-    </>;
+        <Button color="primary">Podaj wycenę</Button>
+        <QuestionsAndAnserwersWrapper>
+          {data?.messages?.map(message => (
+            <QuestionsAndAnserwers
+              fromWhom={String(message.isAnonymous)}
+              question={message.content}
+              answer={message.message?.content}
+            />
+          ))}
+        </QuestionsAndAnserwersWrapper>
+      </BubblesPageWrapper>
+    </>
+  );
 };
