@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Annoucements } from 'Pages/Annoucements';
 import { AnnoucementDetails } from 'Pages/AnnoucementDetails/';
+import { AnnouncementBidding } from 'Pages/AnnouncementBidding';
 import { NoMatch } from 'Pages/NoMatch';
 import { UserPage } from 'Pages/User';
 import { ToastContainer } from 'material-react-toastify';
@@ -18,6 +19,10 @@ const App = () => {
           <Route index element={<Annoucements />} />
           <Route path="annoucements">
             <Route index element={<Annoucements />} />
+            <Route
+              path=":annoucementId/bidding"
+              element={<AnnouncementBidding />}
+            />
             <Route path=":annoucementId" element={<AnnoucementDetails />} />
             <Route path="*" element={<NoMatch />} />
           </Route>

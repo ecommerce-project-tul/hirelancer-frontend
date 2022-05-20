@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { Announcement } from 'Api/Types/Announcement';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Api from 'Api/api';
 import { StyledTitle } from 'Components/StyledTitle';
 import { Wrapper } from 'Components/BubblesPageWrapper/styled';
@@ -51,7 +51,9 @@ export const AnnoucementDetails = () => {
       <BubblesPageWrapper>
         <AnnoucementDescription>{data?.description}</AnnoucementDescription>
 
-        <Button color="primary">Podaj wycenę</Button>
+        <Link to="bidding">
+          <Button color="primary">Podaj wycenę</Button>
+        </Link>
         <QuestionsAndAnserwersWrapper>
           {data?.messages?.map(message => (
             <QuestionsAndAnserwers

@@ -1,4 +1,4 @@
 export interface LoginResponse {
-    expiresIn: number;
-    token: string;
- }
+  expiresIn: number;
+  token: string;
+}
