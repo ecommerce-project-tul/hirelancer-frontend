@@ -17,16 +17,16 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route index element={<Annoucements />} />
-          <Route path="annoucements">
+          <Route path="announcement">
             <Route index element={<Annoucements />} />
             <Route
-              path=":annoucementId/bidding"
+              path=":announcementId/bidding"
               element={<AnnouncementBidding />}
             />
-            <Route path=":annoucementId" element={<AnnoucementDetails />} />
+            <Route path=":announcementId" element={<AnnoucementDetails />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
-          <Route path="users">
+          <Route path="user">
             <Route path=":email" element={<UserPage />} />
             <Route path="*" element={<NoMatch />} />
           </Route>

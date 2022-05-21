@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Announcement } from 'Api/Types/Announcement';
 import { useParams, Link } from 'react-router-dom';
 import Api from 'Api/api';
+import Session from 'Api/session';
+import jwt_decode from 'jwt-decode';
 import { StyledTitle } from 'Components/StyledTitle';
 import { Wrapper } from 'Components/BubblesPageWrapper/styled';
 import { Button } from 'Components/Button';
@@ -32,13 +34,29 @@ export const QuestionsAndAnserwersWrapper = styled.div`
   margin-top: 1rem;
 `;
 
+export const OfferEnded = styled.h3`
+  font-family: 'Poiret One';
+  font-size: 1.6rem;
+`;
+
 export const AnnoucementDetails = () => {
-  const { annoucementId } = useParams<{ annoucementId: string }>();
+  const { announcementId } = useParams<{ announcementId: string }>();
 
   const { isLoading, error, data } = useQuery<
     Announcement,
     { message: string }
-  >(['repoData', annoucementId], () => Api.getAnnoucementById(annoucementId!));
+  >(['repoData', announcementId], () =>
+    Api.getAnnoucementById(announcementId!),
+  );
+
+  const isMine = () => {
+    const token = Session.getSessionToken();
+    if (!token) return false;
+    if (!data) return false;
+
+    const { userId } = jwt_decode(token) as { userId: string };
+    return userId === data.client.id;
+  };
 
   if (error)
     return <StyledTitle>{'Wystąpił błąd: ' + error.message}</StyledTitle>;
@@ -51,9 +69,15 @@ export const AnnoucementDetails = () => {
       <BubblesPageWrapper>
         <AnnoucementDescription>{data?.description}</AnnoucementDescription>
 
-        <Link to="bidding">
-          <Button color="primary">Podaj wycenę</Button>
-        </Link>
+        {isMine() || data?.isActive === true ? (
+          <Link to="bidding">
+            <Button color="primary">
+              {isMine() ? 'Zobacz oferty' : 'Podaj wycenę'}
+            </Button>
+          </Link>
+        ) : (
+          <OfferEnded>Oferta zakończona. Dziękujemy za udział ❤️</OfferEnded>
+        )}
         <QuestionsAndAnserwersWrapper>
           {data?.messages?.map(message => (
             <QuestionsAndAnserwers

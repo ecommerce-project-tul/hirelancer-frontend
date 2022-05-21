@@ -22,5 +22,5 @@ export const ContentWrapper = styled.div`
   position: relative;
   z-index: 2;
 
-  height: 100%;
+  min-height: 100%;
 `;

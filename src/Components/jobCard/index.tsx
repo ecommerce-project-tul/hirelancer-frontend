@@ -34,7 +34,7 @@ export const JobCard = ({
       <List>
         <Item>
           <Label>Typ</Label>
-          {type.split(',').map((tag) => (
+          {type.split(',').map(tag => (
             <Chip label={tag}></Chip>
           ))}
         </Item>
@@ -47,7 +47,7 @@ export const JobCard = ({
           {revenue}
         </Item>
       </List>
-      <a href={`/annoucements/${id}`}>
+      <a href={`/announcement/${id}`}>
         <TextButton>Zobacz więcej</TextButton>
       </a>
     </Wrapper>

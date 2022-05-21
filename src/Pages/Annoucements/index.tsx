@@ -39,6 +39,12 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
+const LoginWrapper = styled.div`
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+`;
+
 export const Annoucements = () => {
   const [tagsQuery, setTagsQuery] = useState([] as string[]);
 
@@ -58,8 +64,10 @@ export const Annoucements = () => {
 
   return (
     <>
-      <LoginModal />
-      <RegisterModal />
+      <LoginWrapper>
+        <LoginModal />
+        <RegisterModal />
+      </LoginWrapper>
       <StyledTitle>{getTitle()}</StyledTitle>
       <Wrapper>
         <StyledChipInput setTags={setTagsQuery} />
