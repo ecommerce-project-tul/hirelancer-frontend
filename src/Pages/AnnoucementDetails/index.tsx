@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode';
 import { StyledTitle } from 'Components/StyledTitle';
 import { Wrapper } from 'Components/BubblesPageWrapper/styled';
 import { Button } from 'Components/Button';
+import { AddComment } from 'Components/AddComment';
 import { BubblesPageWrapper } from 'Components/BubblesPageWrapper';
 import _ from 'lodash';
 import { EMessageType } from 'Api/Types/EMessageType';
@@ -42,10 +43,10 @@ export const OfferEnded = styled.h3`
 export const AnnoucementDetails = () => {
   const { announcementId } = useParams<{ announcementId: string }>();
 
-  const { isLoading, error, data } = useQuery<
+  const { isLoading, error, data, refetch } = useQuery<
     Announcement,
     { message: string }
-  >(['repoData', announcementId], () =>
+  >(['announcementDetails', announcementId], () =>
     Api.getAnnoucementById(announcementId!),
   );
 
@@ -81,11 +82,16 @@ export const AnnoucementDetails = () => {
         <QuestionsAndAnserwersWrapper>
           {data?.messages?.map(message => (
             <QuestionsAndAnserwers
-              fromWhom={String(message.isAnonymous)}
+              fromWhom={
+                message.isAnonymous
+                  ? 'Anonim'
+                  : `${message.user.firstName} ${message.user.lastName}`
+              }
               question={message.content}
               answer={message.message?.content}
             />
           ))}
+          <AddComment refetch={refetch} />
         </QuestionsAndAnserwersWrapper>
       </BubblesPageWrapper>
     </>

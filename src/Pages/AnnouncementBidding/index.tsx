@@ -23,6 +23,7 @@ import {
 } from './styled';
 import { Offer } from './offer';
 import { Statistics } from './statistics';
+import { Title } from 'Components/jobCard/styled';
 
 export const AnnouncementBidding = memo(() => {
   const { announcementId } = useParams<{ announcementId: string }>();

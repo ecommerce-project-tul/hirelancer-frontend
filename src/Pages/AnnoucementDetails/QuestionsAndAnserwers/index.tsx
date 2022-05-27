@@ -13,9 +13,13 @@ export const QuestionsAndAnserwers = ({
 }: Props) => {
   return (
     <>
-      <div>Pytanie {question}</div>
+      <div>Pytanie: {question}</div>
       <div>Od: {fromWhom}</div>
-      <div>Odpowiedź {answer}</div>
+      {answer ? (
+        <div>Odpowiedź: {answer}</div>
+      ) : (
+        <div>Jeszcze nie udzielono odpowiedzi</div>
+      )}
       <hr />
     </>
   );

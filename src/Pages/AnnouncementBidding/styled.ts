@@ -22,6 +22,8 @@ export const OffersWrapper = styled.div`
   justify-content: start;
   grid-gap: 4.8rem;
   margin-top: 4.8rem;
+  width: 40vw;
+  overflow-y: auto;
 `;
 
 export const OfferWrapper = styled.div`

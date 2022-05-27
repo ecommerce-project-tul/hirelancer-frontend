@@ -9,18 +9,21 @@ import { LoginResponse } from './Models/Responses/LoginResponse';
 import { LoginRequest } from './Models/Requests/LoginRequest';
 import { RegistrationResponse } from './Models/Responses/RegistrationResponse';
 import { RegistrationRequest } from './Models/Requests/RegistrationRequest';
+import { AddQuestionRequest } from './Models/Requests/AddQuestionRequest';
 
 export default class Api {
+  private static instance: AxiosInstance;
+
   public static createClient(): AxiosInstance {
-    const headers = Api.getHeaders();
-
-    const instance = axios.create({
-      baseURL: config.baseUrl,
-      timeout: 10000,
-      headers,
-    });
-
-    return instance;
+    if (this.instance === undefined) {
+      const headers = Api.getHeaders();
+      this.instance = axios.create({
+        baseURL: config.baseUrl,
+        timeout: 10000,
+        headers,
+      });
+    }
+    return this.instance;
   }
 
   public static getHeaders() {
@@ -80,6 +83,20 @@ export default class Api {
 
   public static async getUser(email: string): Promise<User> {
     const response = await Api.createClient().get(`/users/${email}`);
+    return response?.data;
+  }
+
+  public static async addNewQuestion({
+    announcementId,
+    question,
+  }: {
+    announcementId: string;
+    question: AddQuestionRequest;
+  }): Promise<any> {
+    const response = await Api.createClient().post(
+      `/announcement/${announcementId}/question`,
+      question,
+    );
     return response?.data;
   }
 }
