@@ -1,5 +1,6 @@
 import { ButtonBase } from '@mui/material';
 import styled from 'styled-components';
+import { OverflowTooltip } from 'Components/OverflowTooltip';
 
 export const Wrapper = styled.div`
   background: linear-gradient(
@@ -22,7 +23,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Title = styled.h2`
+export const Title = styled(OverflowTooltip)`
   margin: 0;
   padding: 0;
   font-style: normal;

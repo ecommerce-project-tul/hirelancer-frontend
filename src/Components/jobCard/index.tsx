@@ -8,7 +8,7 @@ import {
   Wrapper,
   TextButton,
 } from './styled';
-import Chip from '@mui/material/Chip';
+import { Chip } from 'Components/Chip';
 
 interface Props {
   projectName: string;
@@ -23,28 +23,23 @@ export const JobCard = ({
   projectName,
   description,
   type,
-  technology,
   revenue,
   id,
 }: Props) => {
   return (
     <Wrapper>
-      <Title>{projectName}</Title>
+      <Title title={projectName}>{projectName}</Title>
       <Description>{description}</Description>
       <List>
         <Item>
-          <Label>Typ</Label>
+          <Label>Tagi</Label>
           {type.split(',').map(tag => (
             <Chip label={tag}></Chip>
           ))}
         </Item>
         <Item>
-          <Label>Technologia</Label>
-          {technology}
-        </Item>
-        <Item>
-          <Label>Widelki</Label>
-          {revenue}
+          <Label>Cena maksymalna</Label>
+          {revenue} PLN
         </Item>
       </List>
       <a href={`/announcement/${id}`}>

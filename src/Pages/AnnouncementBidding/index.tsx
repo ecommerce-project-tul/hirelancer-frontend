@@ -85,7 +85,7 @@ export const AnnouncementBidding = memo(() => {
     if (!inputRef.current) return;
     const offer = Number(inputRef.current.value);
 
-    if (offer !== NaN && offer !== null) AddOffer(offer);
+    if (!isNaN(offer) && offer !== null) AddOffer(offer);
   };
 
   const acceptOffer = (id: string) => {
@@ -118,7 +118,7 @@ export const AnnouncementBidding = memo(() => {
                 ))}
               </OffersWrapper>
             </div>
-            <Statistics offers={offers.current} />
+            {<Statistics offers={offers.current} />}
           </ContentWrapper>
         ) : (
           <EndedWrapper>Oferta została zakończona</EndedWrapper>

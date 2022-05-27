@@ -9,6 +9,7 @@ import { FormikField } from 'Components/FormikField';
 import { Button } from 'Components/Button';
 import { toast } from 'material-react-toastify';
 import { validationSchema } from './validation';
+import Session from 'Api/session';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -16,7 +17,7 @@ const StyledForm = styled(Form)`
 
   > div {
     margin: 1.2rem 2.4rem;
-    max-width: 
+    max-width: ;
   }
 `;
 
@@ -26,7 +27,7 @@ export const ModalContent = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { mutate, isLoading } = useMutation(Api.createAnnouncement, {
     onSuccess: data => {
-      navigate(`/annoucements/${data.anncouncementId}`);
+      navigate(`/announcement/${data.anncouncementId}`);
     },
     onError: () => {
       toast.error('Wystąpil bląd!');
@@ -35,28 +36,38 @@ export const ModalContent = () => {
       queryClient.invalidateQueries('create');
     },
   });
+  const userEmail = Session.getSessionObject()?.userEmail ?? '';
 
   return (
     <Formik
       initialValues={{
-        email: '',
         title: '',
         description: '',
         startingPrice: 0,
         deadlineDate: new Date(),
         tagName: '',
       }}
-      onSubmit={values => mutate(values)}
+      onSubmit={values => mutate({ email: userEmail, ...values })}
       validationSchema={validationSchema}
     >
       {({ errors, touched }) => (
         <StyledForm>
-          <FormikField name="email" type="email" label="Twój adres email"/>
-          <FormikField name="title" type="text" label="Tytuł ogłoszenia"/>
-          <FormikField name="description" type="text"  label="Opis ogłoszenia"/>
-          <FormikField name="startingPrice" type="number"  label="Cena początkowa ogłoszenia"/>       
-          <FormikField name="deadlineDate" type="date"  label="Data wykonania zlecenia"/>
-          <FormikField name="tagName" type="text"  label="Tagi ogłoszenia"/>
+          <FormikField name="title" type="text" label="Tytuł ogłoszenia" />
+          <FormikField name="description" type="text" label="Opis ogłoszenia" />
+          <FormikField
+            name="startingPrice"
+            type="number"
+            label="Cena początkowa ogłoszenia"
+          />
+          <FormikField
+            name="deadlineDate"
+            type="date"
+            label="Data wykonania zlecenia"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <FormikField name="tagName" type="text" label="Tagi ogłoszenia" />
           <Button type="submit">Dodaj ogloszenie</Button>
         </StyledForm>
       )}

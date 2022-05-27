@@ -38,8 +38,12 @@ export const Statistics = memo(({ offers }: Props) => {
   return (
     <StatisticsWrapper>
       <span>{`Liczba ofert: ${number}`}</span>
-      <span>{`Średnia wycena: ${average}`}</span>
-      <span>{`Mediana wycen: ${median}`}</span>
+      {offers.length > 0 && (
+        <>
+          <span>{`Średnia wycena: ${average}`}</span>
+          <span>{`Mediana wycen: ${median}`}</span>
+        </>
+      )}
       <span>{`Liczba freelancerów: ${uniqueUsers}`}</span>
     </StatisticsWrapper>
   );
