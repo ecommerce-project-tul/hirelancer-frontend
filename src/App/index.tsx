@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Annoucements } from 'Pages/Annoucements';
 import { AnnoucementDetails } from 'Pages/AnnoucementDetails/';
 import { AnnouncementBidding } from 'Pages/AnnouncementBidding';
+import { PaymentSuccess } from 'Pages/PaymentSuccess';
 import { NoMatch } from 'Pages/NoMatch';
 import { UserPage } from 'Pages/User';
 import { ToastContainer } from 'material-react-toastify';
@@ -30,6 +31,7 @@ const App = () => {
             <Route path=":email" element={<UserPage />} />
             <Route path="*" element={<NoMatch />} />
           </Route>
+          <Route path="payment-success" element={<PaymentSuccess />}></Route>
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </BrowserRouter>

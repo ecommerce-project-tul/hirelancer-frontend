@@ -99,4 +99,15 @@ export default class Api {
     );
     return response?.data;
   }
+
+  public static async checkout({
+    announcementId,
+  }: {
+    announcementId: string;
+  }): Promise<any> {
+    const response = await Api.createClient().post(
+      `/announcement/${announcementId}/checkout`,
+    );
+    return response?.data;
+  }
 }

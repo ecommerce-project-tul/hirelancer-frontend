@@ -63,6 +63,15 @@ export const AnnouncementBidding = memo(() => {
       setIsActive(isActive);
     });
 
+    newSocket.on(
+      'offerAccepted',
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+      ({ announcementId }: { announcementId: string }) => {
+        Api.checkout({ announcementId });
+      },
+    );
+
+
     return () => {
       newSocket.close();
     };
@@ -92,6 +101,9 @@ export const AnnouncementBidding = memo(() => {
   const acceptOffer = (id: string) => {
     socket?.emit('acceptOffer', { offerId: id });
   };
+
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+  const onOfferAccept = (announcementId: string) => {};
 
   return (
     <Wrapper>
