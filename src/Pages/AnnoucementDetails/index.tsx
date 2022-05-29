@@ -80,19 +80,28 @@ export const AnnoucementDetails = () => {
           <OfferEnded>Oferta zakończona. Dziękujemy za udział ❤️</OfferEnded>
         )}
         <QuestionsAndAnserwersWrapper>
-          {data?.messages?.map(message => (
-            <QuestionsAndAnserwers
-              fromWhom={
-                message.isAnonymous
-                  ? 'Anonim'
-                  : `${message.user.firstName} ${message.user.lastName}`
-              }
-              question={message.content}
-              questionId={message.id}
-              answer={message.message?.content}
-              isMine={Boolean(isMine)}
-            />
-          ))}
+          {data?.messages
+            ?.filter(message => message.messageType === EMessageType.QUESTION)
+            .map(message => {
+              const answer = data.messages.find(
+                a =>
+                  a.messageType === EMessageType.ANSWER &&
+                  a?.parent?.id === message.id,
+              );
+              return (
+                <QuestionsAndAnserwers
+                  fromWhom={
+                    message.isAnonymous
+                      ? 'Anonim'
+                      : `${message.user.firstName} ${message.user.lastName}`
+                  }
+                  question={message?.content}
+                  questionId={message.id}
+                  answer={answer?.content}
+                  isMine={Boolean(isMine)}
+                />
+              );
+            })}
           <AddComment refetch={refetch} />
         </QuestionsAndAnserwersWrapper>
       </BubblesPageWrapper>

@@ -38,6 +38,7 @@ export const QuestionsAndAnserwers = ({
       <div>Od: {fromWhom}</div>
       {getAnswer()}
       {showAddAnswer && <AddAnswer questionId={questionId} onSubmit={() => setShowAddAnswer(false)} />}
+      {}
     </Wrapper>
   );
 };
