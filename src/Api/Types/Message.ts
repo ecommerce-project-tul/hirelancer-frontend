@@ -9,6 +9,7 @@ export interface Message {
   messageId?: string;
   content: string;
   isAnonymous: boolean;
+  parent: Message;
   messageType: EMessageType;
   user: User;
 }
