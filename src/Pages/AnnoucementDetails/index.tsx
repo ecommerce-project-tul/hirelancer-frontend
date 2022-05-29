@@ -88,6 +88,7 @@ export const AnnoucementDetails = () => {
                   : `${message.user.firstName} ${message.user.lastName}`
               }
               question={message.content}
+              questionId={message.id}
               answer={message.message?.content}
               isMine={Boolean(isMine)}
             />

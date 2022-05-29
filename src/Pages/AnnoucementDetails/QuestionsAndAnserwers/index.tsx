@@ -5,6 +5,7 @@ import { Wrapper } from './styled';
 
 interface Props {
   question: string;
+  questionId: string;
   answer?: string;
   fromWhom?: string;
   isMine?: boolean;
@@ -12,6 +13,7 @@ interface Props {
 
 export const QuestionsAndAnserwers = ({
   question,
+  questionId,
   answer,
   fromWhom = 'Anonim',
   isMine = false,
@@ -35,7 +37,7 @@ export const QuestionsAndAnserwers = ({
       <div>Pytanie: {question}</div>
       <div>Od: {fromWhom}</div>
       {getAnswer()}
-      {showAddAnswer && <AddAnswer questionId={question} onSubmit={() => setShowAddAnswer(false)} />}
+      {showAddAnswer && <AddAnswer questionId={questionId} onSubmit={() => setShowAddAnswer(false)} />}
     </Wrapper>
   );
 };

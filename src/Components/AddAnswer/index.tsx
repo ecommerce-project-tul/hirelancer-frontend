@@ -42,7 +42,7 @@ export const AddAnswer = memo(({ onSubmit, questionId }: Props) => {
           mutate({
             announcementId: announcementId!,
             questionId: questionId,
-            answer: { clientEmail: '', ...values },
+            answer: { clientEmail: clientEmail, ...values },
           });
           if (onSubmit) onSubmit();
         }
