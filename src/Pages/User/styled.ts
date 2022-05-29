@@ -10,7 +10,7 @@ export const Header = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 7.2rem;
-    line-height: 2rem;
+    line-height: 7.4rem;
   }
 
   h2 {
@@ -42,6 +42,10 @@ export const UserDescription = styled.p`
   letter-spacing: 0.01rem;
 
   color: #000000;
+
+  button {
+    margin: 0.8rem;
+  }
 `;
 
 export const LinksContainer = styled.div`
@@ -61,6 +65,16 @@ export const LinksContainer = styled.div`
   display: grid;
   grid-gap: 2.8rem;
   margin-left: 2.8rem;
+  align-items: start;
+  height: fit-content;
+
+  a {
+    color: #002299;
+
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export const FlexContainer = styled.div`

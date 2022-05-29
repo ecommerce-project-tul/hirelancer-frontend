@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
@@ -7,6 +7,8 @@ import { toast } from 'material-react-toastify';
 import { FormikField } from 'Components/FormikField';
 import { Modal } from 'Components/Modal';
 import { Button } from 'Components/Button';
+import Session from 'Api/session';
+import { validationSchema } from './validation';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -26,32 +28,63 @@ const FixedButton = styled(Button)`
 `;
 
 export const LoginModal = memo(() => {
-    const [open, setOpen] = useState(false);
-		const queryClient = useQueryClient();
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { mutate, isLoading } = useMutation(Api.login, {
-			onSuccess: data => {
-				setOpen(false);
-				toast.success('Zalogowano!');
-			},
-			onError: () => {
-				toast.error('Wystąpil bląd!');
-			},
-			onSettled: () => {
-				queryClient.invalidateQueries('login');
-			},
-		});
+	const [open, setOpen] = useState(false);
+	const [logged, setLogged] = useState(false);
 
-    return <>
-        <FixedButton onClick={() => setOpen(true)}>Zaloguj</FixedButton>
-        <Modal open={open} onClose={() => setOpen(false)}>
-            <Formik onSubmit={(form) => mutate(form)} initialValues={{ email: '', password: '' }}>
-							<StyledForm>
-								<FormikField name="email" type="email" label="email"/>
-								<FormikField name="password" type="password" label="hasŁo"/>
-								<Button disabled={isLoading} type="submit">Zaloguj</Button>
+	useEffect(() => {
+		const token = Session.getSessionToken();
+		if (token) {
+			setLogged(true);
+		} else {
+			setLogged(false);
+		}
+	}, []);
+
+	const queryClient = useQueryClient();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const { mutate, isLoading } = useMutation(Api.login, {
+		onSuccess: data => {
+			setOpen(false);
+			setLogged(true);
+			toast.success('Zalogowano!');
+			location.reload();
+		},
+		onError: () => {
+			toast.error('Wystąpil bląd!');
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries('login');
+		},
+	});
+
+	const logout = () => {
+		Session.clearSession();
+		setLogged(false);
+		location.reload();
+	};
+
+	return <>
+		{
+			!logged ?
+				(
+					<>
+						<FixedButton onClick={() => setOpen(true)}>Zaloguj</FixedButton>
+						<Modal open={open} onClose={() => setOpen(false)}>
+							<Formik onSubmit={(form) => mutate(form)} initialValues={{ email: '', password: '' }} validationSchema={validationSchema}>
+								<StyledForm>
+									<FormikField name="email" type="email" label="email" />
+									<FormikField name="password" type="password" label="hasŁo" />
+									<Button disabled={isLoading} type="submit">Zaloguj</Button>
 								</StyledForm>
 							</Formik>
-        </Modal >
-    </>;
+						</Modal >
+					</>
+				) :
+				(
+					<>
+						<FixedButton onClick={() => logout()}>Wyloguj</FixedButton>
+					</>
+				)
+		}
+	</>;
 });

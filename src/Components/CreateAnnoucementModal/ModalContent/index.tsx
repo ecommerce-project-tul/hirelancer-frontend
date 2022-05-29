@@ -37,6 +37,7 @@ export const ModalContent = () => {
     },
   });
   const userEmail = Session.getSessionObject()?.userEmail ?? '';
+  console.log('userEmail', userEmail);
 
   return (
     <Formik

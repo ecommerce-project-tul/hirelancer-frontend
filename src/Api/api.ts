@@ -9,7 +9,9 @@ import { LoginResponse } from './Models/Responses/LoginResponse';
 import { LoginRequest } from './Models/Requests/LoginRequest';
 import { RegistrationResponse } from './Models/Responses/RegistrationResponse';
 import { RegistrationRequest } from './Models/Requests/RegistrationRequest';
+import { AddAnswerRequest } from './Models/Requests/AddAnwerRequest';
 import { AddQuestionRequest } from './Models/Requests/AddQuestionRequest';
+import { UpdateUserRequest } from './Models/Requests/UpdateUserRequest';
 
 export default class Api {
   private static instance: AxiosInstance;
@@ -86,6 +88,11 @@ export default class Api {
     return response?.data;
   }
 
+  public static async updateUser({ email, ...data }: UpdateUserRequest): Promise<void> {
+    const response = await Api.createClient().put(`/users/${email}`, data);
+    return response?.data;
+  }
+
   public static async addNewQuestion({
     announcementId,
     question,
@@ -100,6 +107,22 @@ export default class Api {
     return response?.data;
   }
 
+  public static async addNewAnswer({
+    announcementId,
+    questionId,
+    answer,
+  }: {
+    announcementId: string;
+    questionId: string;
+    answer: AddAnswerRequest;
+  }): Promise<any> {
+    const response = await Api.createClient().post(
+      `/announcement/${announcementId}/question/${questionId}/answer`,
+      answer,
+    );
+    return response?.data;
+  }
+
   public static async checkout({
     announcementId,
   }: {
@@ -108,6 +131,6 @@ export default class Api {
     const response = await Api.createClient().post(
       `/announcement/${announcementId}/checkout`,
     );
-    return response?.data;
+    return response;
   }
 }

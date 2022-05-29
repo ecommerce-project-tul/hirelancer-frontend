@@ -72,7 +72,7 @@ export const PaymentSuccess = memo(() => {
 
   return (
     <Wrapper>
-      <Rotating3d>✈️🏢 🏢 </Rotating3d>
+      <Rotating3d>🎉</Rotating3d>
       <h1>Płatność dokonana</h1>
       <h2>Potwierdzenie dostaniesz na maila</h2>
       <p>

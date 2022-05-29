@@ -2,6 +2,7 @@ import React, { useState, memo } from 'react';
 import { Formik, Form, Field } from 'formik';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import Api from 'Api/api';
 import { EUserRole } from 'Api/Types/EUserRole';
 import { toast } from 'material-react-toastify';
@@ -9,6 +10,8 @@ import { Select, InputLabel, MenuItem } from '@mui/material';
 import { FormikField } from 'Components/FormikField';
 import { Modal } from 'Components/Modal';
 import { Button } from 'Components/Button';
+import Session from 'Api/session';
+import { validationSchema } from './validation';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -28,6 +31,7 @@ const FixedButton = styled(Button)`
 `;
 
 export const RegisterModal = memo(() => {
+	const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 		const queryClient = useQueryClient();
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,6 +47,15 @@ export const RegisterModal = memo(() => {
 				queryClient.invalidateQueries('register');
 			},
 		});
+		
+	const token = Session.getSessionObject();
+	console.log(token);
+
+	if (token) {
+		return <>
+        	<FixedButton onClick={() => navigate(`/user/${token?.userEmail}`)}>Mój profil</FixedButton>
+		</>;
+	}
 
     return <>
         <FixedButton onClick={() => setOpen(true)}>Zarejestruj</FixedButton>
@@ -53,7 +66,9 @@ export const RegisterModal = memo(() => {
 							firstName: '',
 							lastName: '',
 							role: EUserRole.CLIENT,
-						}}>
+						}}
+						validationSchema = {validationSchema}
+						>
 						{({ values, errors, touched, setFieldValue }) => (
 							<StyledForm>
 								<FormikField name="email" type="email" label="email"/>

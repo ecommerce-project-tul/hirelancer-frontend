@@ -66,8 +66,13 @@ export const AnnouncementBidding = memo(() => {
     newSocket.on(
       'offerAccepted',
     // eslint-disable-next-line @typescript-eslint/no-shadow
-      ({ announcementId }: { announcementId: string }) => {
-        Api.checkout({ announcementId });
+      async ({ announcementId }: { announcementId: string }) => {
+        try {
+          const response = await Api.checkout({ announcementId });
+          window.location.href = response?.data?.url;
+        } catch (e) {
+          console.log(e);
+        }
       },
     );
 

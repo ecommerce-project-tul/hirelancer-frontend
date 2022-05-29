@@ -89,6 +89,7 @@ export const AnnoucementDetails = () => {
               }
               question={message.content}
               answer={message.message?.content}
+              isMine={Boolean(isMine)}
             />
           ))}
           <AddComment refetch={refetch} />
